@@ -1,0 +1,14 @@
+# TG-Gateway — зависимости
+# Установка: pip install -r requirements.txt
+
+# Backend (gateway.py) — FastAPI + ASGI-сервер
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pydantic==2.9.0
+
+# Общее — загрузка .env
+python-dotenv==1.0.1
+
+# Userbot (userbot.py) — Telethon
+Telethon==1.36.0
+cryptg==0.4.0          # ускорение шифрования MTProto (опционально, но желательно)

@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "mimosa-finding-ledger-batch/v1",
+  "batchId": "stop-20260914T151210956Z-75514-1ecf3b8a4407",
+  "runId": "20260914T151210956Z-75514-1ecf3b8a4407",
+  "runStatus": "inconclusive",
+  "coverage": {
+    "status": "partial",
+    "reasons": [
+      {
+        "code": "baseline_partial",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline capture had enumeration or snapshot errors",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline_partial: baseline capture had enumeration or snapshot errors",
+        "affectsCompletion": true
+      }
+    ]
+  },
+  "source": {
+    "component": "zcode-hook",
+    "operationId": "Stop"
+  },
+  "revision": "6b5db961975186d1850b095c0e28f89f8d580a8d",
+  "diffHash": "b7618d25054b21968d40ab70f475fa42083e2d5ee3240d9f0adb31d46230e515",
+  "rulesVersion": "unavailable",
+  "sessionHash": "cd097678c6b1aec22b129194859835c24f6262a3d8d71cc7cf35fb770d2d38f9",
+  "reportRef": ".mimosa/reports/task-review-sess_7eaee523-18f0-45b2-a2cb-4b96a8c2a09e-20260914T151210956Z-75514-1ecf3b8a4407.json",
+  "events": [],
+  "observedFindingIds": [],
+  "verifiedFiles": [
+    {
+      "file": "src/main.js",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/charts/lead-sources.js",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/charts/inbox.js",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/charts/revenue.js",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/charts/top-clients.js",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/charts/tariffs.js",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/charts/forecast.js",
+      "direct": "complete",
+      "projectContext": "partial"
+    }
+  ],
+  "recordedAt": "2026-09-14T15:12:11.368Z"
+}

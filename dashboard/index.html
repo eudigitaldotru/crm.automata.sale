@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AUTOMATA-CRM · Дашборд</title>
+    <meta name="description" content="Бизнес-дашборд: выручка, клиенты, прогноз, кредитная нагрузка — AUTOMATA-CRM" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/src/style.css?v=20260924b" />
+</head>
+
+<body>
+    <!-- SVG-спрайт (редизайн 14.09.2026, из мокапа «единая лента») -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+            <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4.5 13.2c-.4.5 0 1.3.7 1.3H10l-1 7.5 8.5-11.2c.4-.5 0-1.3-.7-1.3H12l1-7.5Z" fill="currentColor"/></symbol>
+            <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></symbol>
+            <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 6-2 7-2 7h16s-2-1-2-7"/><path d="M13.7 20a2 2 0 0 1-3.4 0"/></symbol>
+            <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+            <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H8l-5 3 1.2-4.2A8 8 0 1 1 21 12Z"/></symbol>
+            <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 10 8-6.5L20 10v10H4z"/><path d="M10 20v-5h4v5"/></symbol>
+            <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.4"/><path d="M2.8 20a6.4 6.4 0 0 1 12.4 0"/><path d="M16.5 5.2a3.4 3.4 0 0 1 0 6.6"/><path d="M18 20a6.5 6.5 0 0 0-1.9-4.6"/></symbol>
+            <symbol id="i-biz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M5 20V11"/><path d="M10 20V5"/><path d="M15 20v-6"/><path d="M20 20V8"/></symbol>
+            <symbol id="i-money" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17 10 10l4 3.5L20 7"/><path d="M15 7h5v5"/></symbol>
+            <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></symbol>
+            <symbol id="i-send" viewBox="0 0 24 24"><path d="M4.4 11.6 19.6 4.6c.8-.4 1.6.4 1.3 1.2l-6.6 15.1c-.4.8-1.5.8-1.9 0l-2.6-5.5-5.5-2.6c-.8-.4-.8-1.5.1-1.8Z" fill="currentColor"/></symbol>
+            <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+            <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+            <symbol id="i-tg" viewBox="0 0 24 24"><path d="M21.3 4.3 2.9 11.5c-1 .4-1 1.8 0 2.2l4.3 1.5 1.7 5.2c.3.9 1.5 1.1 2.1.3l2.2-2.6 4.4 3.2c.8.6 1.9.1 2-1l2.6-14.5c.2-1-.8-1.8-1.9-1.5Zm-3.6 3.5-6.4 5.9c-.2.2-.4.5-.4.8l-.3 3.1-1.2-3.8 8.9-6.9c.4-.3.8.2.4.5Z" fill="currentColor"/></symbol>
+            <symbol id="i-max" viewBox="0 0 24 24"><path d="M4 20V4.8c0-.7.8-1 1.3-.6l5.3 4c.2.2.6.2.8 0l5.3-4c.5-.4 1.3-.1 1.3.6V20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18.9" cy="19.4" r="2.1" fill="currentColor"/></symbol>
+            <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="5" width="18.4" height="14" rx="2.6"/><path d="m3.6 7.4 7.3 5.1c.7.5 1.5.5 2.2 0l7.3-5.1"/></symbol>
+            <symbol id="i-robot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="3.4"/><path d="M12 4.4V8"/><circle cx="12" cy="3.2" r="1.3"/><path d="M9.2 13v1.6M14.8 13v1.6"/><path d="M1.8 12.5v3M22.2 12.5v3"/></symbol>
+            <symbol id="i-grp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5a5.8 5.8 0 0 1 11 0"/><circle cx="17.5" cy="9.5" r="2.3"/><path d="M15.6 19.5a5 5 0 0 1 5.4-3.6"/></symbol>
+            <symbol id="i-person" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20a7 7 0 0 1 14 0"/></symbol>
+            <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 3H7.5A2.5 2.5 0 0 0 5 5.5v13A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V8.5z"/><path d="M13.5 3v5.5H19"/></symbol>
+            <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="5.5" width="18.4" height="13" rx="2.6"/><path d="M2.8 10h18.4"/><path d="M6.5 14.5h3"/></symbol>
+            <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.2" y="3.2" width="7.4" height="7.4" rx="2"/><rect x="13.4" y="3.2" width="7.4" height="7.4" rx="2"/><rect x="3.2" y="13.4" width="7.4" height="7.4" rx="2"/><rect x="13.4" y="13.4" width="7.4" height="7.4" rx="2"/></symbol>
+            <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7.5A2.5 2.5 0 0 0 5 5.5v13A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V8z"/><path d="M9 13h6M9 17h4"/></symbol>
+            <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></symbol>
+            <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.2 12S5.8 5.8 12 5.8 21.8 12 21.8 12 18.2 18.2 12 18.2 2.2 12 2.2 12Z"/><circle cx="12" cy="12" r="2.9"/></symbol>
+            <symbol id="i-holo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.6" r="3"/><path d="M6.8 19.6a5.6 5.6 0 0 1 10.4 0"/><path d="M4.2 4.6a10.6 10.6 0 0 0 0 12.2"/><path d="M19.8 4.6a10.6 10.6 0 0 1 0 12.2"/></symbol>
+        </defs>
+    </svg>
+
+    <div id="app">
+
+        <!-- Header → топбар (редизайн 14.09.2026) -->
+        <header class="dash-header">
+            <div class="dash-header-inner">
+                <div class="brand">
+                    <div class="brand-mark"><svg width="18" height="18"><use href="#i-bolt"/></svg></div>
+                    <div class="brand-name">AUTOMATA <b>CRM</b> <span>· Dashboard</span> <span class="help-trigger" id="globalHelpTrigger">?</span></div>
+                </div>
+
+                <button class="search" id="topSearch" title="Поиск по клиентам и чатам">
+                    <svg width="15" height="15"><use href="#i-search"/></svg>
+                    <span>Поиск по клиентам, чатам и файлам…</span>
+                    <kbd>⌘K</kbd>
+                </button>
+
+                <div class="header-actions">
+                    <!-- легаси-пилюли: скрыты, данные идут в чип и блок «Здоровье» -->
+                    <div class="status-box">
+                        <div id="tgStatus" class="status-pill" title="Telegram Listener">
+                            <span class="status-dot"></span>
+                            <span class="status-label">TG Listener</span>
+                        </div>
+                        <div id="maxStatus" class="status-pill" title="MAX Bot API" style="cursor:pointer;">
+                            <span class="status-dot"></span>
+                            <span class="status-label">MAX …</span>
+                        </div>
+                        <div id="mailStatus" class="status-pill" title="Почта IMAP/SMTP" style="cursor:pointer;">
+                            <span class="status-dot"></span>
+                            <span class="status-label">✉ Почта</span>
+                        </div>
+                        <div id="monitorStatus" class="status-pill" title="Site Monitor Health">
+                            <span class="status-dot"></span>
+                            <span class="status-label">Monitor: ??</span>
+                        </div>
+                    </div>
+                    <div class="header-meta">
+                        <button class="chip-status" id="chipIntegrations" title="Раскрыть показатели здоровья">
+                            <i class="dot ok"></i>
+                            <b id="chipOkCount">—</b> канала
+                            <span class="ms" id="chipMs">· —</span>
+                            <svg width="14" height="14"><use href="#i-chev"/></svg>
+                        </button>
+                        <button class="icon-btn" id="holoBtn" title="Голограмма Джарвиса — клик или клавиша J; правый клик — прослушивание слова «Джарвис»">
+                            <svg width="17" height="17"><use href="#i-holo"/></svg>
+                            <span class="holo-dot" id="holoDot" data-state="off"></span>
+                        </button>
+                        <button class="icon-btn" title="Конструктор отчётов на automata.sale" onclick="window.open('https://automata.sale/analytics/', '_blank')">
+                            <svg width="17" height="17"><use href="#i-eye"/></svg>
+                        </button>
+                        <button class="icon-btn" title="База Знаний (Obsidian)" onclick="window.open('obsidian://open?vault=AUTOMATA-CRM&file=60_Reference%2FAUTOMATA_CRM_KB.md')">
+                            <svg width="17" height="17"><use href="#i-doc"/></svg>
+                        </button>
+                        <button class="icon-btn" id="pdSafeBtn" title="Сейф ПД: проверка состояния…" style="color:#9ca3af">
+                            <svg width="17" height="17"><use href="#i-lock"/></svg>
+                        </button>
+                        <button class="icon-btn refresh-btn" id="refreshBtn" title="Обновить данные">
+                            <svg width="17" height="17" style="transform:rotate(90deg)"><use href="#i-send"/></svg>
+                        </button>
+                        <button class="icon-btn" title="Уведомления">
+                            <svg width="17" height="17"><use href="#i-bell"/></svg>
+                            <i class="pip"></i>
+                        </button>
+                        <button class="avatar-btn" title="Владелец">Я</button>
+                        <span class="last-updated-mini" id="lastUpdated" style="display:none">Загрузка...</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Grid -->
+        <main class="dash-main">
+        <!-- Tabs Navigation -->
+        <nav class="dash-tabs">
+            <button class="tab-btn active" data-tab="tab-chat"><svg width="16" height="16"><use href="#i-chat"/></svg>Чат</button>
+            <button class="tab-btn" data-tab="tab-mail"><svg width="16" height="16"><use href="#i-mail"/></svg>Почта</button>
+            <button class="tab-btn" data-tab="tab-today"><svg width="16" height="16"><use href="#i-home"/></svg>Сегодня</button>
+            <button class="tab-btn" data-tab="tab-board"><svg width="16" height="16"><use href="#i-biz"/></svg>Совет <span class="board-q-badge" id="boardQBadge" style="display:none"></span></button>
+            <button class="tab-btn" data-tab="tab-clients"><svg width="16" height="16"><use href="#i-users"/></svg>Клиенты</button>
+            <button class="tab-btn" data-tab="tab-business"><svg width="16" height="16"><use href="#i-biz"/></svg>Бизнес</button>
+                        <button class="tab-btn" data-tab="tab-tech"><svg width="16" height="16"><use href="#i-grid"/></svg>Аналитика</button>
+            <button class="tab-btn" data-tab="tab-finances"><svg width="16" height="16"><use href="#i-money"/></svg>Финансы</button>
+            <button class="tab-btn" data-tab="tab-system"><svg width="16" height="16"><use href="#i-gear"/></svg>Система</button>
+        </nav>
+
+        <!-- ═══════════ ЧАТ: единая лента (редизайн 14.09.2026 по мокапу Заметки/index.html) ═══════════ -->
+        <div class="tab-content active" id="tab-chat">
+            <div class="chat-grid">
+
+                <!-- ЛЕВАЯ: ДИАЛОГИ -->
+                <section class="col col-left">
+                    <div class="col-head">
+                        <div class="col-title">Диалоги</div>
+                        <div class="chip ok" style="margin-left:auto"><i></i><span id="chatChannelsChip">— канала</span></div>
+                    </div>
+                    <div class="dlg-search">
+                        <svg width="14" height="14"><use href="#i-search"/></svg>
+                        <input id="chatSearch" type="text" placeholder="Найти клиента…" autocomplete="off">
+                    </div>
+                    <div class="seg" id="chatSeg">
+                        <button class="on" data-seg="all">Все</button>
+                        <button data-seg="unread">Новые</button>
+                        <button data-seg="leads">Лиды</button>
+                    </div>
+                    <div class="scroll" id="chatThreads">
+                        <div class="chat-empty">Загрузка диалогов…</div>
+                    </div>
+                </section>
+
+                <!-- ЦЕНТР: ЕДИНАЯ ЛЕНТА -->
+                <section class="col col-center">
+                    <div class="th-head">
+                        <div>
+                            <div class="th-name" id="chatTitle">Выберите клиента слева</div>
+                            <div class="th-sub" id="chatSub">единая лента коммуникаций · Telegram, MAX и почта</div>
+                        </div>
+                        <div class="th-filter" id="chatFilters">
+                            <button class="on" data-ch="all"><svg width="13" height="13"><use href="#i-grid"/></svg>Все</button>
+                            <button data-ch="telegram"><i style="background:var(--tg)"></i>Telegram</button>
+                            <button data-ch="max"><i style="background:var(--max)"></i>MAX</button>
+                            <button data-ch="email"><i style="background:var(--mail)"></i>Почта</button>
+                            <button class="ev-toggle on" id="evToggle" title="Разметка улик детектора (список/карточка)">🛡 разметка</button>
+                        </div>
+                    </div>
+
+                    <div class="scroll">
+                        <div class="feed" id="chatFeed">
+                            <div class="chat-empty">Выберите клиента слева — единая лента его коммуникаций<br><small>Telegram, MAX, почта и ответы ИИ-ассистента в одном потоке</small></div>
+                        </div>
+                    </div>
+
+                    <!-- КОМПОЗЕР -->
+                    <div class="composer" id="chatComposer" style="display:none;">
+                        <div class="comp-row">
+                            <label class="pick" title="Куда отправить">
+                                <span class="sw"></span>
+                                <svg width="13" height="13"><use href="#i-grp"/></svg>
+                                <select id="chatTarget"></select>
+                                <svg width="13" height="13"><use href="#i-chev"/></svg>
+                            </label>
+                            <div class="who-seg" id="chatAuthorSeg">
+                                <button data-author="jarvis"><svg width="13" height="13"><use href="#i-robot"/></svg>Automata CRM assist</button>
+                                <button class="on" data-author="evgeny"><svg width="13" height="13"><use href="#i-person"/></svg>Я</button>
+                            </div>
+                        </div>
+                        <div class="comp-box">
+                            <textarea id="chatInput" rows="1" placeholder="Сообщение в Telegram-чат клиента…"></textarea>
+                            <button class="send" id="chatSendBtn" title="Отправить (Ctrl+Enter)">
+                                <svg width="18" height="18"><use href="#i-send"/></svg>
+                            </button>
+                        </div>
+                        <div class="comp-hint">
+                            <b>Ctrl+Enter</b> — отправить · <b>Тема:</b> для почты подставляется автоматически · сообщения ассистента помечаются подписью ИИ
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ПРАВАЯ: КАРТОЧКА КЛИЕНТА -->
+                <aside class="col col-right" id="chatCard">
+                    <div class="chat-empty">Карточка клиента<br><small>появится после выбора диалога</small></div>
+                </aside>
+
+            </div>
+        </div>
+
+        <!-- ═══════════ ПОЧТА: простой почтовый клиент (письма + связи CRM) ═══════════ -->
+        <div class="tab-content" id="tab-mail">
+            <section class="mail-wrap">
+                <div class="mail-toolbar">
+                    <h2 class="mail-title">✉️ Почта</h2>
+                    <input id="mailSearch" class="mail-input" type="search"
+                           placeholder="Поиск: тема, текст, адрес…">
+                    <select id="mailDirFilter" class="mail-select">
+                        <option value="">Все письма</option>
+                        <option value="in">← Входящие</option>
+                        <option value="out">→ Исходящие</option>
+                    </select>
+                    <select id="mailBoxFilter" class="mail-select">
+                        <option value="">Все ящики</option>
+                    </select>
+                    <button class="btn btn--secondary btn--sm" id="mailRefreshBtn" title="Обновить">↻</button>
+                    <span class="mail-count" id="mailCount"></span>
+                </div>
+                <div class="mail-cols">
+                    <div class="mail-list" id="mailList">
+                        <div class="mail-empty">Загрузка…</div>
+                    </div>
+                    <div class="mail-view" id="mailView">
+                        <div class="mail-empty">Выберите письмо слева,<br>чтобы увидеть текст, вложения и связи в CRM</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+            <div class="tab-content" id="tab-today">
+<section class="kpi-row" id="kpiRow">
+                <div class="kpi-card" id="kpiMrr">
+                    <div class="kpi-icon">💰</div>
+                    <div class="kpi-body">
+                        <div class="kpi-label">MRR</div>
+                        <div class="kpi-value" id="kpiMrrValue">—</div>
+                        <div class="kpi-sub">ежемесячная выручка</div>
+                    </div>
+                </div>
+                <div class="kpi-card kpi-card--warn" id="kpiDebt">
+                    <div class="kpi-icon">⚠️</div>
+                    <div class="kpi-body">
+                        <div class="kpi-label">Задолженность</div>
+                        <div class="kpi-value" id="kpiDebtValue">—</div>
+                        <div class="kpi-sub" id="kpiDebtSub">неоплаченных счетов</div>
+                    </div>
+                </div>
+                <div class="kpi-card" id="kpiClients">
+                    <div class="kpi-icon">👥</div>
+                    <div class="kpi-body">
+                        <div class="kpi-label">Активные клиенты</div>
+                        <div class="kpi-value" id="kpiClientsValue">—</div>
+                        <div class="kpi-sub" id="kpiClientsSub">на поддержке</div>
+                    </div>
+                </div>
+                <div class="kpi-card" id="kpiRevMonth" style="cursor:pointer" title="Нажмите — кто оплатил в этом месяце">
+                    <div class="kpi-icon">📈</div>
+                    <div class="kpi-body">
+                        <div class="kpi-label">Выручка за месяц <span class="kpi-detail-hint">▾</span></div>
+                        <div class="kpi-value" id="kpiRevMonthValue">—</div>
+                        <div class="kpi-sub">оплачено</div>
+                    </div>
+                    <div class="kpi-detail" id="kpiRevMonthDetail" hidden></div>
+                </div>
+            </section>
+
+            <!-- блок экспресс-аудита удалён по решению владельца 14.09.2026 -->
+
+            <!-- Eisenhower Matrix (Tasks) — над счетами и лидами по решению владельца 14.09.2026 -->
+            <section class="eisenhower-section">
+                <div class="chart-header">
+                    <h2>⚖️ Матрица Эйзенхауэра (задачи и встречи) <span class="help-trigger" id="eisenhowerHelpTrigger">?</span></h2>
+                    <div class="header-actions">
+                        <button class="btn btn--primary btn--sm" id="createTaskBtn" title="Создать задачу в 30_Tasks/">＋ Задача</button>
+                        <button class="btn btn--secondary btn--sm" id="syncTasksBtn">↻ Обновить статусы</button>
+                    </div>
+                </div>
+                <div class="eisenhower-grid" id="eisenhowerMatrix">
+                    <div class="quadrant q1" id="quadrant-q1">
+                        <div class="quadrant-header">🔥 Срочно & Важно (Do First)</div>
+                        <div class="task-list"></div>
+                    </div>
+                    <div class="quadrant q2" id="quadrant-q2">
+                        <div class="quadrant-header">📅 Важно (Schedule)</div>
+                        <div class="task-list"></div>
+                    </div>
+                    <div class="quadrant q3" id="quadrant-q3">
+                        <div class="quadrant-header">💡 Срочно (Delegate)</div>
+                        <div class="task-list"></div>
+                    </div>
+                    <div class="quadrant q4" id="quadrant-q4">
+                        <div class="quadrant-header">☕ Не срочно & Не важно (Eliminate)</div>
+                        <div class="task-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tables-row">
+                <!-- Unpaid Invoices -->
+                <div class="table-card">
+                    <div class="chart-header">
+                        <h2>💸 Неоплаченные счета (Требуют действия)</h2>
+                        <div class="header-actions">
+                            <button class="btn btn--primary btn--sm" id="createInvoiceBtn" title="Счёт за разовые услуги вне поддержки">＋ Счёт</button>
+                            <button class="btn btn--secondary btn--sm" id="createActBtn" title="Акт выполненных работ">＋ Акт</button>
+                        </div>
+                    </div>
+                    <div class="table-wrapper" id="tableUnpaid"></div>
+                </div>
+
+                <!-- Новые лиды из TG-Gateway (и др. источников) -->
+                <div class="table-card">
+                    <div class="chart-header">
+                        <h2>🆕 Новые лиды <span id="leadsCount" style="font-size:0.7em; color: var(--text-muted)"></span></h2>
+                    </div>
+                    <div class="table-wrapper" id="newLeadsTable">
+                        <div class="loading-state">Загрузка лидов...</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tables-row">
+                <!-- SLA -->
+                <div class="table-card">
+                    <div class="chart-header">
+                        <h2>⏰ Истекают SLA-таймеры</h2>
+                    </div>
+                    <div class="table-wrapper" id="tableSlaTimers">
+                        <div class="loading-state">Загрузка...</div>
+                    </div>
+                </div>
+                
+                <!-- Мониторинг и Безопасность (перенесено с вкладки Tech) -->
+                <div class="table-card">
+                    <div class="chart-header">
+                        <h2>🌐 Мониторинг и Безопасность (Uptime, SSL, PageSpeed)</h2>
+                        <div class="header-actions">
+                            <button class="btn btn--secondary btn--sm" id="refreshMonitoringBtn">↻ Обновить</button>
+                        </div>
+                    </div>
+                    <div class="table-wrapper" id="tableSiteMonitoring">
+                        <div class="loading-state">Загрузка мониторинга...</div>
+                    </div>
+                </div>
+            </section>
+            </div>
+    
+            <div class="tab-content" id="tab-clients">
+<!-- SLA Support Matrix Section -->
+            <section class="matrix-section">
+                <div class="chart-header">
+                    <h2>⏱️ Матрица Техподдержки (SLA)</h2>
+                    <div class="header-actions" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                        <label style="font-size:0.8em; color:var(--text-muted); display:flex; align-items:center; gap:4px; cursor:pointer;">
+                            <input type="checkbox" id="slaPreviewMode" checked style="cursor:pointer;"> Превью
+                        </label>
+                        <select id="slaPeriodSelect" style="background:var(--bg-dark); color:var(--text-primary); border:1px solid var(--border); border-radius:6px; padding:4px 8px; font-size:0.8em; cursor:pointer;" title="Период выставления (для досрочных счетов)"></select>
+                        <button class="btn btn--primary" id="slaInvoiceBtn">📄 Сформировать</button>
+                        <button class="btn btn--success" id="slaSendAllBtn">📤 Отправить всем</button>
+                        <button class="btn btn--secondary btn--sm" id="templatesBtn">📝 Шаблоны</button>
+                    </div>
+                </div>
+                <div class="table-wrapper" id="slaSupportMatrix">
+                    <div class="loading-state">Загрузка матрицы SLA...</div>
+                </div>
+                <div id="slaInvoiceLog" style="margin-top: 12px; font-size: 0.85em; padding: 12px; border-radius: 8px; background: var(--bg-dark); color: #00ff00; font-family: monospace; max-height: 260px; overflow-y: auto; white-space: pre-wrap; display: none;"></div>
+            </section>
+
+<!-- Support Payment Matrix Section -->
+            <section class="matrix-section">
+                <div class="chart-header">
+                    <h2>📅 Матрица оплат (Техподдержка) <span class="help-trigger" id="paymentHelpTrigger">?</span></h2>
+                    <div class="header-actions">
+                        <button class="btn btn--primary" id="reconcileBankBtn">↻ Свериться с банком</button>
+                        <button class="btn btn--success" id="sendUnpaidBtn">✉ Отправить неоплаченные счета</button>
+                    </div>
+                </div>
+                <div class="matrix-wrapper" id="supportMatrix">
+                    <!-- Matrix will be rendered here -->
+                    <div class="loading-state">Загрузка матрицы...</div>
+                </div>
+            </section>
+<!-- Not Regular Matrix Section -->
+            <section class="matrix-section">
+                <div class="chart-header">
+                    <h2>📅 Матрица оплат (Разовые работы)</h2>
+                </div>
+                <div class="matrix-wrapper" id="notRegularMatrix">
+                    <div class="loading-state">Загрузка матрицы...</div>
+                </div>
+            </section>
+
+<!-- All Clients Directory -->
+            <section class="matrix-section">
+                <div class="chart-header">
+                    <h2>👥 Все клиенты и тарифы <span class="help-trigger" id="clientsHelpTrigger">?</span></h2>
+                    <div class="header-actions">
+                        <input type="text" id="clientsSearch" class="clients-search" placeholder="🔍 Поиск: имя, email, ИНН…">
+                    </div>
+                </div>
+                <div class="table-wrapper" id="allClientsTable">
+                    <div class="loading-state">Загрузка клиентов...</div>
+                </div>
+            </section>
+            </div>
+    
+            <div class="tab-content" id="tab-business">
+            
+            <section class="charts-row" id="rowGoals">
+                <div class="chart-card" style="width: 100%;">
+                    <div class="chart-header">
+                        <h2>🎯 Стратегические цели</h2>
+                    </div>
+                    <div id="goalsContainer" style="display: flex; flex-direction: column; gap: 1rem; padding-top: 10px;">
+                        <div class="loading-state">Загрузка целей...</div>
+                    </div>
+                </div>
+            </section>
+
+<section class="charts-row" id="rowTopInbox">
+                <!-- Top Clients -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2>🏆 Топ клиентов по выручке</h2>
+                    </div>
+                    <div id="chartTopClients"></div>
+                </div>
+
+                <!-- Communications -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2>📨 Входящие запросы</h2>
+                    </div>
+                    <div id="chartInbox"></div>
+                </div>
+            </section>
+
+            <section class="charts-row" id="rowLeads">
+                <!-- Lead Sources -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2>🎯 Источники лидов</h2>
+                    </div>
+                    <div id="chartLeadSources"></div>
+                </div>
+
+                <!-- Lead Funnel -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2>🧲 Воронка лидов</h2>
+                    </div>
+                    <div id="chartLeadFunnel"></div>
+                </div>
+            </section>
+
+            <!-- Kanban Pipeline -->
+            <section class="tables-row">
+                <div class="table-card" style="width: 100%;">
+                    <div class="chart-header">
+                        <h2>📋 Pipeline Сделок (Kanban)</h2>
+                    </div>
+                    <div class="kanban-board" id="pipelineKanban">
+                        <div class="loading-state">Загрузка Kanban...</div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="charts-row" id="rowMainCharts">
+                <!-- Revenue Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2>📊 Выручка по месяцам</h2>
+                    </div>
+                    <div id="chartRevenue"></div>
+                </div>
+
+                <!-- Tariff Donut -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2>👥 Тарифы клиентов</h2>
+                    </div>
+                    <div id="chartTariffs"></div>
+                </div>
+            </section>
+<section class="charts-row" id="rowForecastCredit">
+                <!-- Forecast -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2>🔮 Прогноз выручки (6 мес.)</h2>
+                    </div>
+                    <div id="chartForecast"></div>
+                </div>
+
+                <!-- Credit Load -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2>💳 Кредитная нагрузка</h2>
+                    </div>
+                    <div id="chartCredit"></div>
+                    <div class="credit-stats" id="creditStats"></div>
+                </div>
+            </section>
+<!-- Tables Row -->
+            <section class="tables-row">
+                
+
+                <!-- Upcoming Renewals -->
+                <div class="table-card">
+                    <div class="chart-header">
+                        <h2>🔄 Продления (30 дней)</h2>
+                    </div>
+                    <div class="table-wrapper" id="tableRenewals"></div>
+                </div>
+            </section>
+<!-- Credits Table -->
+            <section class="table-card table-card--full">
+                <div class="chart-header">
+                    <h2>🏦 Кредиты и займы</h2>
+                </div>
+                <div class="table-wrapper" id="tableCredits"></div>
+            </section>
+            </div>
+
+            <div class="tab-content" id="tab-tech">
+            
+            <!-- GEO/SEO-аудиты (по образцу мониторинга) -->
+            <section class="tables-row" id="rowGeoAudit" style="margin-top: 16px;">
+                <div class="table-card table-card--full">
+                    <div class="chart-header">
+                        <h2>🔍 GEO/SEO-аудиты (видимость в нейросетях) <span class="help-trigger" id="geoHelpTrigger">?</span></h2>
+                        <div class="header-actions">
+                            <button class="btn btn--secondary btn--sm" id="refreshGeoBtn">↻ Обновить</button>
+                        </div>
+                    </div>
+                    <div class="table-wrapper" id="tableGeo" style="padding: 16px;">
+                        <div class="loading-state">Загрузка GEO-аудитов...</div>
+                    </div>
+                </div>
+            </section>
+            </div>
+    
+            <div class="tab-content" id="tab-finances">
+            <section class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2>Прогнозы и планы</h2>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+                        <span style="color:var(--text-muted);">Свободно на конец месяца</span>
+                        <strong style="color:var(--success); font-size: 1.1em;" id="finFreeMoney">-- ₽</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+                        <span style="color:var(--text-muted);">Деньги на месяц</span>
+                        <strong style="color:var(--success);" id="finTotalMoney">-- ₽</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+                        <span style="color:var(--text-muted);">Расходы</span>
+                        <strong style="color:var(--text-primary);" id="finTotalExpenses">-- ₽</strong>
+                    </div>
+                    
+                    <div id="finForecastList" style="margin-top: 15px; max-height: 400px; overflow-y: auto;"></div>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2>Аналитика с выводами</h2>
+                        <div class="header-label" style="font-size: 0.85em; color:var(--text-muted);">Сравнение с прошлым месяцем</div>
+                    </div>
+                    <div id="finAnalyticsList" style="margin-top: 15px; max-height: 400px; overflow-y: auto;"></div>
+                </div>
+            </section>
+            
+            <section class="charts-row" id="rowExpenses">
+                <!-- Personal Finances -->
+                <div class="chart-card" style="grid-column: 1 / -1; display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                    <div class="expense-chart-col">
+                        <div class="chart-header">
+                            <h2>💳 Личные Финансы (Траты за месяц)</h2>
+                        </div>
+                        <div id="chartExpenses"></div>
+                    </div>
+                    <div class="expense-list-col">
+                        <div class="chart-header">
+                            <h2>Последние транзакции</h2>
+                        </div>
+                        <div id="expenseList" style="max-height: 300px; overflow-y: auto;"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- ═══════════ СОВЕТ: Команда Автомата (KPI + решения + вердикты) ═══════════ -->
+        <div class="tab-content" id="tab-board">
+            <div class="board-wrap" id="boardRoot">
+                <div style="padding:24px; color:var(--text-muted)">Совет директоров: загрузка…</div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-system">
+
+                <section class="charts-row" style="grid-template-columns: 1fr 1fr;">
+                    <div class="table-card">
+                        <div class="chart-header">
+                            <h2>⚙️ Статусы интеграций</h2>
+                            <button class="btn btn--secondary btn--sm" id="btnSystemStatus">↻ Обновить</button>
+                        </div>
+                        <div id="systemStatusList" style="padding: 1rem 0;">
+                            <div class="loading-state">Загрузка статусов...</div>
+                        </div>
+                    </div>
+                    <div class="table-card">
+                        <div class="chart-header">
+                            <h2>🚀 Быстрые действия</h2>
+                        </div>
+                        <div id="quickActionsList" style="display: flex; flex-direction: column; gap: 10px; padding: 1rem 0;">
+                            <button class="btn btn--primary" onclick="runSystemAction('reconcile')">🔄 Сверить выписки с банком</button>
+                            <button class="btn btn--secondary" onclick="runSystemAction('extract_data')">📊 Принудительно обновить Дашборд</button>
+                        </div>
+                        <div id="actionResult" style="margin-top: 15px; font-size: 0.9em; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.2); display: none;"></div>
+                    </div>
+                </section>
+                <section class="tables-row">
+                    <div class="table-card table-card--full">
+                        <div class="chart-header">
+                            <h2>🪐 Голограмма Джарвиса</h2>
+                            <div style="display:flex; gap:8px;">
+                                <button class="btn btn--secondary btn--sm" id="holoCallBtn" title="Клавиша J">Вызвать / погасить</button>
+                                <button class="btn btn--secondary btn--sm" id="holoWakeBtn" title="Фоновое прослушивание слова «Джарвис»">Слушать «Джарвис»</button>
+                            </div>
+                        </div>
+                        <div class="holo-models" id="holoModels">
+                            <button class="holo-model-card" data-model="michelle">
+                                <span class="holo-model-ava">💃</span>
+                                <span class="holo-model-name">Michelle</span>
+                                <span class="holo-model-desc">Реалистичная девушка, непрерывная пластика (замедленный танец) · 3,1 МБ</span>
+                            </button>
+                            <button class="holo-model-card" data-model="xbot">
+                                <span class="holo-model-ava">🤖</span>
+                                <span class="holo-model-name">Xbot</span>
+                                <span class="holo-model-desc">Женский андроид с живым idle — переступает и шевелит руками · 2,8 МБ</span>
+                            </button>
+                            <button class="holo-model-card" data-model="2b">
+                                <span class="holo-model-ava">⚔️</span>
+                                <span class="holo-model-name">2B (NieR)</span>
+                                <span class="holo-model-desc">Девушка-андроид в платье из NieR: Automata, статичная поза · 0,4 МБ</span>
+                            </button>
+                            <button class="holo-model-card" data-model="video">
+                                <span class="holo-model-ava">📹</span>
+                                <span class="holo-model-name">Видео (моё)</span>
+                                <span class="holo-model-desc">Твои вертикальные ролики по событиям: покой / слушаю / думаю / говорю · webm с прозрачным фоном</span>
+                            </button>
+                            <button class="holo-model-card" data-model="face">
+                                <span class="holo-model-ava">🗣️</span>
+                                <span class="holo-model-name">Голова (мимика)</span>
+                                <span class="holo-model-desc">Говорящая голова: 52 морфа мимики, живые глаза и движения · 0,3 МБ</span>
+                            </button>
+                        </div>
+                        <div class="holo-model-note" id="holoModelNote">Текущая модель: —</div>
+                    </div>
+                </section>
+                <section class="tables-row">
+                    <div class="table-card table-card--full">
+                        <div class="chart-header">
+                            <h2>📜 Логи системы</h2>
+                            <button class="btn btn--secondary btn--sm" id="btnSystemLogs">↻ Обновить логи</button>
+                        </div>
+                        <div style="background: var(--bg-dark); color: #00ff00; font-family: monospace; padding: 1rem; border-radius: 8px; height: 300px; overflow-y: auto;" id="systemLogsBox">
+                            Загрузка логов...
+                        </div>
+                    </div>
+                </section>
+            </div>
+    </main>
+
+        <!-- Footer -->
+        <footer class="dash-footer">
+            <span>AUTOMATA-CRM Dashboard · Данные из Obsidian Vault · сборка v14.09-5 «кто оплатил: клик сразу»</span>
+        </footer>
+
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Инструкция</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div id="modalBody" class="modal-body">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Голограмма Джарвиса (Blade Runner 2049): оверлей поверх всего UI -->
+    <div id="holo-root" aria-hidden="true"></div>
+
+    <script type="module" src="/src/main.js?v=20260924b"></script>
+</body>
+
+</html>

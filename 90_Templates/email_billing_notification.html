@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Напоминание об оплате счета за сопровождение сайта</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f4f4f4;">
+        <tr>
+            <td align="center" style="padding: 40px 0;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    
+                    <!-- Header -->
+                    <tr>
+                        <td style="padding: 40px 40px 20px 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px 8px 0 0;">
+                            <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 600; text-align: center;">
+                                Напоминание об оплате
+                            </h1>
+                        </td>
+                    </tr>
+                    
+                    <!-- Main Content -->
+                    <tr>
+                        <td style="padding: 30px 40px;">
+                            <p style="margin: 0 0 20px 0; color: #333333; font-size: 16px; line-height: 1.6;">
+                                Добрый день!
+                            </p>
+                            
+                            <p style="margin: 0 0 25px 0; color: #333333; font-size: 16px; line-height: 1.6;">
+                                Напоминаем о необходимости оплаты за услуги по сопровождению вашего сайта.
+                            </p>
+
+                            <!-- Document basis info -->
+                            <div style="background-color: #fff4e6; border-left: 4px solid #ff9800; padding: 15px; margin: 20px 0; border-radius: 0 4px 4px 0;">
+                                <p style="margin: 0; color: #333333; font-size: 15px;">
+                                    <strong>На основании:</strong> Счета №{{invoice_number}} от {{invoice_date}}
+                                </p>
+                            </div>
+                            
+                            <!-- Period Info Box -->
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa; border-radius: 6px; margin: 25px 0;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        <strong style="color: #667eea; font-size: 14px;">ПЕРИОД ОБСЛУЖИВАНИЯ:</strong>
+                                        <span style="color: #333333; font-size: 16px; display: block; margin-top: 5px;">
+                                            {{month_year}}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Services Info -->
+                            <div style="margin: 30px 0;">
+                              
+                                <!-- Упрощенный блок без детализации -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa; border-radius: 6px; margin: 25px 0;">
+    <tr>
+        <td style="padding: 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                    <td style="color: #333333; font-size: 16px; font-weight: 600;">
+                        Итого к оплате:
+                    </td>
+                    <td style="color: #667eea; font-size: 22px; font-weight: bold; text-align: right;">
+                        {{amount}} ₽
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="color: #666666; font-size: 12px; text-align: right; padding-top: 5px;">
+                        Без НДС
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+                            </div>
+                            
+                            <!-- Download Documents -->
+                            <div style="background-color: #e8f4f8; border-left: 4px solid #667eea; padding: 20px; margin: 25px 0; border-radius: 0 4px 4px 0;">
+                                <p style="margin: 0 0 15px 0; color: #333333; font-size: 15px; font-weight: 600;">
+                                    Документы для скачивания:
+                                </p>
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                    <tr>
+                                        <td style="padding-bottom: 10px;">
+                                            {% if invoice_link %}
+                                            <a href="{{invoice_link}}" style="display: inline-block; padding: 12px 24px; background-color: #667eea; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500;">
+                                                Скачать счет на оплату
+                                            </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            {% if act_link %}
+                                            <a href="{{act_link}}" style="display: inline-block; padding: 12px 24px; background-color: #764ba2; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500;">
+                                                Скачать акт выполненных работ (Дата: {{act_date}})
+                                            </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            <p style="margin: 25px 0; color: #333333; font-size: 16px; line-height: 1.6;">
+                                Просим вас произвести оплату в ближайшее время для обеспечения непрерывной работы вашего сайта.
+                            </p>
+                            
+                            <p style="margin: 20px 0 30px 0; color: #666666; font-size: 14px; line-height: 1.6; font-style: italic;">
+                                Если оплата уже произведена, просим сообщить нам об этом в ответном письме.
+                            </p>
+                            
+                            <!-- Signature -->
+                            <p style="margin: 30px 0 10px 0; color: #333333; font-size: 16px;">
+                                С уважением,<br>
+                                <strong>Евгений</strong>
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer with contacts -->
+                    <tr>
+                        <td style="padding: 30px 40px; background-color: #f8f9fa; border-radius: 0 0 8px 8px;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                <tr>
+                                    <td align="center">
+                                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="text-align: left;">
+                                            <tr>
+                                                <td style="padding-bottom: 8px;">
+                                                    <span style="color: #555555; font-size: 14px;">Саратов, Чернышевского, 94г</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-bottom: 8px;">
+                                                    <a href="tel:{{seller_phone}}" style="color: #667eea; font-size: 14px; text-decoration: none;">+7 906 311-77-69</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-bottom: 8px;">
+                                                    <a href="mailto:hello@eu-digital.ru" style="color: #667eea; font-size: 14px; text-decoration: none;">hello@eu-digital.ru</a>
+                                                    <span style="color: #999999; font-size: 14px;"> | </span>
+                                                    <a href="mailto:{{seller_email}}" style="color: #667eea; font-size: 14px; text-decoration: none;">{{seller_email}}</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-bottom: 8px;">
+                                                    <a href="https://{{seller_site}}" style="color: #667eea; font-size: 14px; text-decoration: none;">{{seller_site}}</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a href="https://t.me/automatasale" style="color: #667eea; font-size: 14px; text-decoration: none;">Telegram: {{seller_telegram}}</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

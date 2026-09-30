@@ -1,0 +1,9 @@
+# Automata CRM — engine dependencies (Python 3.10+)
+fastapi
+uvicorn
+pydantic
+requests
+PyYAML
+python-dotenv
+telethon          # Telegram userbot/gateway client
+edge-tts          # voice UI TTS (fallback: ELEVENLABS_API_KEY)

@@ -1,0 +1,41 @@
+# TG-Gateway — docker-compose для запуска на VPS
+# Запуск: docker compose up -d
+# Логи:   docker compose logs -f
+#
+# ВАЖНО: userbot при первом запуске требует интерактивной авторизации
+# (код из SMS/Telegram). Поэтому gateway стартует в docker, а userbot
+# первый раз запускают вручную (см. README, раздел «Первый запуск»).
+
+services:
+  gateway:
+    build: .
+    container_name: tg_gateway
+    restart: always
+    env_file: .env
+    ports:
+      - "8443:8443"          # порт gateway наружу (позади файрвола / nginx)
+    volumes:
+      - ./data:/app/data     # SQLite БД персистентна
+    environment:
+      - GATEWAY_DB=/app/data/gateway.db
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8443/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  userbot:
+    build: .
+    container_name: tg_userbot
+    restart: always
+    env_file: .env
+    depends_on:
+      - gateway
+    volumes:
+      - ./data:/app/data
+      - ./sessions:/app/sessions   # .session-файл (НЕ коммитить!)
+    environment:
+      - TG_SESSION=/app/sessions/gateway_session
+      - GATEWAY_URL=http://gateway:8443
+    command: python userbot.py
+    # userbot не открывает портов наружу — только исходящие к Telegram + gateway

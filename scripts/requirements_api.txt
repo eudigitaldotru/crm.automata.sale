@@ -1,0 +1,4 @@
+fastapi
+uvicorn
+pydantic
+edge-tts            # TTS для голосовой голограммы (fallback: ELEVENLABS_API_KEY)

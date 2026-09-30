@@ -1,0 +1,54 @@
+
+/* Kanban Board */
+.kanban-board {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+.kanban-col {
+    flex: 1;
+    min-width: 250px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 8px;
+    padding: 12px;
+}
+.kanban-col-header {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+}
+.kanban-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.kanban-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+.kanban-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+.kanban-card-client {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+.kanban-card-rev {
+    font-size: 13px;
+    color: var(--success);
+    font-weight: 600;
+    margin-top: 8px;
+}
+

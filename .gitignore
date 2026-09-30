@@ -1,0 +1,50 @@
+# ── Данные пользователя (ваши клиенты/счета/чаты — никогда в git) ──
+10_Clients/
+15_Leads/
+20_Inbox/
+20_Outbox/
+25_Chats/
+30_Deals/
+30_Invoices/
+30_Tasks/
+40_Evidence/
+45_Tickets/
+50_Credits/
+50_Legal/
+55_Goals/
+60_Documents/
+99_Archive/
+Clippings/
+company/
+logs/
+CRM/
+
+# ── Секреты и состояние ──
+.env
+.env.*
+!.env.example
+*.session
+*.session.*
+*.db
+*.sqlite*
+.hub_spool/
+.*.json
+!.bitrix_contacts.example.json
+
+# ── Python ──
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# ── Node / dashboard ──
+dashboard/node_modules/
+dashboard/dist/
+dashboard/.cache/
+dashboard/public/data/
+package-lock.json.bak
+
+# ── Прочее ──
+graphify-out/
+.DS_Store
+*.log

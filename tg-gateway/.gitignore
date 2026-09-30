@@ -1,0 +1,24 @@
+# TG-Gateway — секреты и артефакты (НЕ коммитить!)
+
+# Сессии Telethon = полный доступ к аккаунту
+*.session
+*.session-journal
+
+# Окружение / секреты
+.env
+
+# SQLite БД и runtime-данные
+*.db
+*.db-wal
+*.db-shm
+data/
+sessions/
+
+# TLS сертификаты (self-signed)
+*.pem
+*.crt
+*.key
+
+# Python
+__pycache__/
+*.pyc
