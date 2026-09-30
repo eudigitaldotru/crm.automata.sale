@@ -51,7 +51,7 @@
 Требования: Linux, Python 3.10+, Node.js 18+, git.
 
 ```bash
-git clone https://github.com/eudigitaldotru/automata-crm.git
+git clone https://github.com/eudigitaldotru/crm.automata.sale.git
 cd automata-crm
 ./install.sh            # venv + зависимости + каталоги данных
 cp .env.example .env    # заполните только то, что используете

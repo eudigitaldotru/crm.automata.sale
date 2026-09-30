@@ -54,7 +54,7 @@ No cloud. No vendor lock-in. Your entire CRM — clients, deals, invoices, tasks
 Requirements: Linux, Python 3.10+, Node.js 18+, git.
 
 ```bash
-git clone https://github.com/eudigitaldotru/automata-crm.git
+git clone https://github.com/eudigitaldotru/crm.automata.sale.git
 cd automata-crm
 ./install.sh            # venv + Python deps + data folders
 cp .env.example .env    # fill in only what you use
